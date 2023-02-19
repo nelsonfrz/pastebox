@@ -1,2 +1,2 @@
 # Pastebox
-Write and share your texts online.
+Write and share your texts.
