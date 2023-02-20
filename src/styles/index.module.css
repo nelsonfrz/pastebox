@@ -34,3 +34,10 @@
   z-index: -1;
   backdrop-filter: blur(12vmax);
 }
+
+.body {
+  height: 100vh;
+  margin: 0rem;
+  overflow: hidden;
+  z-index: -5;
+}

@@ -2,10 +2,3 @@ a {
   text-decoration: none;
   color: inherit;
 }
-
-body {
-  background-color: black;
-  height: 100vh;
-  margin: 0rem;
-  overflow-x: hidden; 
-}

@@ -13,6 +13,15 @@ const Home: NextPage = () => {
   const mobile = useMediaQuery("(max-width: 900px)");
 
   useEffect(() => {
+    const body = document.querySelector("body");
+    if (body) body.style.overflow = "hidden";
+    return () => {
+      const body = document.querySelector("body");
+      if (body) body.style.overflow = "auto";
+    };
+  }, []);
+
+  useEffect(() => {
     blobRef.current?.animate(
       {
         left: `${x}px`,
