@@ -1,7 +1,6 @@
 import * as Mantine from "@mantine/core";
 import {
   IconAdjustments,
-  IconDownload,
   IconUserCircle,
   IconX,
   IconDeviceFloppy,
@@ -117,23 +116,6 @@ export const HeaderCreate: React.FC<HeaderProps> = ({ children }) => {
       onConfirm: () => void router.push("/"),
     });
 
-  const openExportModal = () =>
-    openConfirmModal({
-      title: "Export",
-      children: (
-        <Mantine.Radio.Group
-          name="exporttype"
-          label="Select your export type"
-          description="Select your desired format to export the text."
-        >
-          <Mantine.Radio value="pdf" label="PDF" />
-          <Mantine.Radio value="html" label="HTML" />
-          <Mantine.Radio value="jpeg" label="JPEG" />
-        </Mantine.Radio.Group>
-      ),
-      labels: { confirm: "Export", cancel: "Cancel" },
-    });
-
   useBeforeunload((event) => {
     if (content) {
       event.preventDefault();
@@ -178,7 +160,11 @@ export const HeaderCreate: React.FC<HeaderProps> = ({ children }) => {
             <Mantine.Group position="apart">
               <Link href="/">
                 <Mantine.Flex align="center" wrap="nowrap" gap="xl">
-                  <Mantine.Avatar size={47} radius={"xl"} src={"/android-chrome-192x192.png"} />
+                  <Mantine.Avatar
+                    size={47}
+                    radius={"xl"}
+                    src={"/android-chrome-192x192.png"}
+                  />
                   <Mantine.Title order={3} style={{ userSelect: "none" }}>
                     Pastebox
                   </Mantine.Title>
@@ -217,15 +203,6 @@ export const HeaderCreate: React.FC<HeaderProps> = ({ children }) => {
                           size={34}
                         >
                           <IconAdjustments size={21} />
-                        </Mantine.ActionIcon>
-                        <Mantine.ActionIcon
-                          onClick={openExportModal}
-                          color="green"
-                          variant="filled"
-                          radius="xl"
-                          size={34}
-                        >
-                          <IconDownload size={21} />
                         </Mantine.ActionIcon>
                       </Mantine.Flex>
                     </Mantine.MediaQuery>
@@ -279,12 +256,6 @@ export const HeaderCreate: React.FC<HeaderProps> = ({ children }) => {
                           icon={<IconAdjustments size={18} />}
                         >
                           Settings
-                        </Mantine.Menu.Item>
-                        <Mantine.Menu.Item
-                          onClick={openExportModal}
-                          icon={<IconDownload size={18} />}
-                        >
-                          Export
                         </Mantine.Menu.Item>
                       </Mantine.Menu.Dropdown>
                     </Mantine.Menu>

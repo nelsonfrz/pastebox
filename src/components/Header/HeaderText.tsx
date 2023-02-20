@@ -1,14 +1,12 @@
 import * as Mantine from "@mantine/core";
 import {
   IconAdjustments,
-  IconDownload,
   IconUserCircle,
   IconPencil,
   IconShare,
   IconPlus,
 } from "@tabler/icons";
 import Link from "next/link";
-import { openConfirmModal } from "@mantine/modals";
 import { useSession } from "next-auth/react";
 import type { Text } from "@prisma/client";
 
@@ -19,23 +17,6 @@ interface HeaderProps {
 
 export const HeaderText: React.FC<HeaderProps> = ({ children, text }) => {
   const { data: session } = useSession();
-
-  const openExportModal = () =>
-    openConfirmModal({
-      title: "Export",
-      children: (
-        <Mantine.Radio.Group
-          name="exporttype"
-          label="Select your export type"
-          description="Select your desired format to export the text."
-        >
-          <Mantine.Radio value="pdf" label="PDF" />
-          <Mantine.Radio value="html" label="HTML" />
-          <Mantine.Radio value="jpeg" label="JPEG" />
-        </Mantine.Radio.Group>
-      ),
-      labels: { confirm: "Export", cancel: "Cancel" },
-    });
 
   return (
     <Mantine.AppShell
@@ -78,15 +59,6 @@ export const HeaderText: React.FC<HeaderProps> = ({ children, text }) => {
                       </Mantine.Button>
                     </Link>
                   )}
-                  <Mantine.ActionIcon
-                    onClick={openExportModal}
-                    color="green"
-                    variant="filled"
-                    radius="xl"
-                    size={34}
-                  >
-                    <IconDownload size={21} />
-                  </Mantine.ActionIcon>
                 </Mantine.Flex>
               </Mantine.MediaQuery>
 
@@ -122,13 +94,6 @@ export const HeaderText: React.FC<HeaderProps> = ({ children, text }) => {
                         Edit
                       </Mantine.Menu.Item>
                     </Link>
-
-                    <Mantine.Menu.Item
-                      onClick={openExportModal}
-                      icon={<IconDownload size={18} />}
-                    >
-                      Export
-                    </Mantine.Menu.Item>
                     <Mantine.Menu.Item
                       onClick={() =>
                         void navigator.share({

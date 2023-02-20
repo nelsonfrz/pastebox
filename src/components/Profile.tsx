@@ -24,14 +24,22 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
       <Mantine.Text>{user?.description}</Mantine.Text>
       <Mantine.Space h={20} />
       <Mantine.Flex wrap="wrap" gap="xl">
+        <Link href={`mailto:${user?.email ?? ""}`}>
+          <Mantine.Button
+            size={mobile ? "xs" : "md"}
+            leftIcon={<IconBrandTelegram size={18} />}
+            color="gray"
+          >
+            Message
+          </Mantine.Button>
+        </Link>
         <Mantine.Button
-          size={mobile ? "xs" : "md"}
-          leftIcon={<IconBrandTelegram size={18} />}
-          color="gray"
-        >
-          Message
-        </Mantine.Button>
-        <Mantine.Button
+          onClick={() =>
+            void navigator.share({
+              title: user.name ?? "",
+              url: `https://pastebox.vercel.app/user/${user.id ?? ""}`,
+            })
+          }
           size={mobile ? "xs" : "md"}
           leftIcon={<IconShare size={18} />}
         >
