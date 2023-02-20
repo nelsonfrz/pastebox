@@ -11,6 +11,7 @@ const Home: NextPage = () => {
   const blobRef = useRef<HTMLDivElement>(null);
   const { x, y } = useMouse();
   const mobile = useMediaQuery("(max-width: 900px)");
+  const hover = useMediaQuery("(hover:none)");
 
   useEffect(() => {
     const body = document.querySelector("body");
@@ -22,14 +23,24 @@ const Home: NextPage = () => {
   }, []);
 
   useEffect(() => {
-    blobRef.current?.animate(
-      {
-        left: `${x}px`,
-        top: `${y}px`,
-      },
-      { duration: 3000, fill: "forwards" }
-    );
-  }, [x, y]);
+    if (!hover) {
+      blobRef.current?.animate(
+        {
+          left: `${x}px`,
+          top: `${y}px`,
+        },
+        { duration: 3000, fill: "forwards" }
+      );
+    } else {
+      blobRef.current?.animate(
+        {
+          left: `30%`,
+          top: `30%`,
+        },
+        { duration: 3000, fill: "forwards" }
+      );
+    }
+  }, [hover, x, y]);
 
   return (
     <>
