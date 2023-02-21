@@ -1,7 +1,6 @@
 import * as Mantine from "@mantine/core";
 import {
   IconAdjustments,
-  IconUserCircle,
   IconShare,
   IconX,
   IconDeviceFloppy,
@@ -17,6 +16,7 @@ import { showNotification } from "@mantine/notifications";
 import { useSession } from "next-auth/react";
 import { useBeforeunload } from "react-beforeunload";
 import type { Text } from "@prisma/client";
+import { AccountDropdownItems } from "./AccountDropdownItems";
 
 export const TextEditorContext = createContext({
   title: "",
@@ -180,7 +180,11 @@ export const HeaderEdit: React.FC<HeaderProps> = ({ children, text }) => {
             <Mantine.Group position="apart">
               <Link href="/">
                 <Mantine.Flex align="center" wrap="nowrap" gap="xl">
-                  <Mantine.Avatar size={47} radius={"xl"} src={"/android-chrome-192x192.png"} />
+                  <Mantine.Avatar
+                    size={47}
+                    radius={"xl"}
+                    src={"/android-chrome-192x192.png"}
+                  />
                   <Mantine.Title order={3} style={{ userSelect: "none" }}>
                     Pastebox
                   </Mantine.Title>
@@ -229,75 +233,74 @@ export const HeaderEdit: React.FC<HeaderProps> = ({ children, text }) => {
                     </Mantine.ActionIcon>
                   </Mantine.Flex>
                 </Mantine.MediaQuery>
+                {session?.user.id ? (
+                  <Mantine.Menu
+                    withArrow
+                    transition="scale-y"
+                    position="bottom-end"
+                  >
+                    <Mantine.Menu.Target>
+                      <Mantine.ActionIcon>
+                        <Mantine.Avatar
+                          radius={"xl"}
+                          src={session?.user.image}
+                        />
+                      </Mantine.ActionIcon>
+                    </Mantine.Menu.Target>
 
-                <Mantine.Menu
-                  withArrow
-                  transition="scale-y"
-                  position="bottom-end"
-                >
-                  <Mantine.Menu.Target>
-                    <Mantine.ActionIcon>
-                      <Mantine.Avatar radius={"xl"} src={session?.user.image} />
-                    </Mantine.ActionIcon>
-                  </Mantine.Menu.Target>
-
-                  <Mantine.Menu.Dropdown>
-                    <Mantine.Menu.Label>Account</Mantine.Menu.Label>
-                    <Link href={`/user/${session?.user.id ?? ""}`}>
-                      <Mantine.Menu.Item icon={<IconUserCircle size={18} />}>
-                        Profile
+                    <Mantine.Menu.Dropdown>
+                      <AccountDropdownItems session={session} />
+                      <Mantine.Menu.Divider />
+                      <Mantine.Menu.Label>Text</Mantine.Menu.Label>
+                      <Mantine.Menu.Item
+                        icon={<IconDeviceFloppy size={18} />}
+                        onClick={openSaveModal}
+                      >
+                        Save
                       </Mantine.Menu.Item>
-                    </Link>
-                    <Link href="/settings">
-                      <Mantine.Menu.Item icon={<IconAdjustments size={18} />}>
+                      <Mantine.Menu.Item
+                        onClick={openCancelModal}
+                        icon={<IconX size={18} />}
+                      >
+                        Cancel
+                      </Mantine.Menu.Item>
+                      <Mantine.Menu.Item
+                        onClick={() => setSettingsModalOpened(true)}
+                        icon={<IconAdjustments size={18} />}
+                      >
                         Settings
                       </Mantine.Menu.Item>
-                    </Link>
-
-                    <Mantine.Menu.Divider />
-                    <Mantine.Menu.Label>Text</Mantine.Menu.Label>
-                    <Mantine.Menu.Item
-                      icon={<IconDeviceFloppy size={18} />}
-                      onClick={openSaveModal}
-                    >
-                      Save
-                    </Mantine.Menu.Item>
-                    <Mantine.Menu.Item
-                      onClick={openCancelModal}
-                      icon={<IconX size={18} />}
-                    >
-                      Cancel
-                    </Mantine.Menu.Item>
-                    <Mantine.Menu.Item
-                      onClick={() => setSettingsModalOpened(true)}
-                      icon={<IconAdjustments size={18} />}
-                    >
-                      Settings
-                    </Mantine.Menu.Item>
-                    <Mantine.Menu.Item
-                      onClick={openDeleteModal}
-                      icon={<IconTrash size={18} />}
-                    >
-                      Delete
-                    </Mantine.Menu.Item>
-                    <Mantine.Menu.Item
-                      onClick={() =>
-                        void navigator.share({
-                          title: text.title,
-                          url: `https://pastebox.vercel.app/text/${text.id}`,
-                        })
-                      }
-                      icon={<IconShare size={18} />}
-                    >
-                      Share
-                    </Mantine.Menu.Item>
-                    <Link href="/text">
-                      <Mantine.Menu.Item icon={<IconPlus size={18} />}>
-                        Create
+                      <Mantine.Menu.Item
+                        onClick={openDeleteModal}
+                        icon={<IconTrash size={18} />}
+                      >
+                        Delete
                       </Mantine.Menu.Item>
-                    </Link>
-                  </Mantine.Menu.Dropdown>
-                </Mantine.Menu>
+                      <Mantine.Menu.Item
+                        onClick={() =>
+                          void navigator.share({
+                            title: text.title,
+                            url: `https://pastebox.vercel.app/text/${text.id}`,
+                          })
+                        }
+                        icon={<IconShare size={18} />}
+                      >
+                        Share
+                      </Mantine.Menu.Item>
+                      <Link href="/text">
+                        <Mantine.Menu.Item icon={<IconPlus size={18} />}>
+                          Create
+                        </Mantine.Menu.Item>
+                      </Link>
+                    </Mantine.Menu.Dropdown>
+                  </Mantine.Menu>
+                ) : (
+                  <Link href="/signin" target="_blank">
+                    <Mantine.Button variant="light" radius="xl">
+                      Sign In
+                    </Mantine.Button>
+                  </Link>
+                )}
               </Mantine.Flex>
             </Mantine.Group>
           </Mantine.Header>

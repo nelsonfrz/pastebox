@@ -1,7 +1,8 @@
 import * as Mantine from "@mantine/core";
-import { IconAdjustments, IconPlus, IconUserCircle } from "@tabler/icons";
+import { IconPlus } from "@tabler/icons";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
+import { AccountDropdownItems } from "./AccountDropdownItems";
 
 interface HeaderProps {
   children?: React.ReactNode;
@@ -57,17 +58,7 @@ export const HeaderDefault: React.FC<HeaderProps> = ({ children }) => {
                   </Mantine.Menu.Target>
 
                   <Mantine.Menu.Dropdown>
-                    <Mantine.Menu.Label>Account</Mantine.Menu.Label>
-                    <Link href={`/user/${session.user.id}`}>
-                      <Mantine.Menu.Item icon={<IconUserCircle size={18} />}>
-                        Profile
-                      </Mantine.Menu.Item>
-                    </Link>
-                    <Link href="/settings">
-                      <Mantine.Menu.Item icon={<IconAdjustments size={18} />}>
-                        Settings
-                      </Mantine.Menu.Item>
-                    </Link>
+                    <AccountDropdownItems session={session} />
 
                     <Mantine.Menu.Label>Text</Mantine.Menu.Label>
                     <Link href="/text">

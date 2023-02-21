@@ -1,10 +1,5 @@
 import * as Mantine from "@mantine/core";
-import {
-  IconAdjustments,
-  IconUserCircle,
-  IconX,
-  IconDeviceFloppy,
-} from "@tabler/icons";
+import { IconAdjustments, IconX, IconDeviceFloppy } from "@tabler/icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { openConfirmModal } from "@mantine/modals";
@@ -15,6 +10,7 @@ import { showNotification } from "@mantine/notifications";
 import { useSession } from "next-auth/react";
 
 import { useBeforeunload } from "react-beforeunload";
+import { AccountDropdownItems } from "./AccountDropdownItems";
 
 export const TextEditorContext = createContext({
   title: "",
@@ -222,21 +218,7 @@ export const HeaderCreate: React.FC<HeaderProps> = ({ children }) => {
                       </Mantine.Menu.Target>
 
                       <Mantine.Menu.Dropdown>
-                        <Mantine.Menu.Label>Account</Mantine.Menu.Label>
-                        <Link href={`/user/${session?.user.id ?? ""}`}>
-                          <Mantine.Menu.Item
-                            icon={<IconUserCircle size={18} />}
-                          >
-                            Profile
-                          </Mantine.Menu.Item>
-                        </Link>
-                        <Link href="/settings">
-                          <Mantine.Menu.Item
-                            icon={<IconAdjustments size={18} />}
-                          >
-                            Settings
-                          </Mantine.Menu.Item>
-                        </Link>
+                        <AccountDropdownItems session={session} />
                         <Mantine.Menu.Divider />
                         <Mantine.Menu.Label>Text</Mantine.Menu.Label>
                         <Mantine.Menu.Item
