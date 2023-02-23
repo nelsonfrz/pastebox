@@ -44,7 +44,7 @@ const UserPage: NextPage<UserPageProps> = ({ id }) => {
           paddingTop: "50px",
           borderRadius: "10px",
           minHeight: "100vh",
-          border: '1px solid rgb(44, 46, 51)'
+          border: "1px solid rgb(44, 46, 51)",
         }}
       >
         <Profile user={getUserQuery.data} />

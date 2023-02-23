@@ -11,7 +11,7 @@ export const Component: React.FC<{
         dangerouslySetInnerHTML={{
           __html: katex.renderToString(props.node.attrs.content, {
             throwOnError: false,
-            errorColor: 'red',
+            errorColor: "red",
             displayMode: true,
           }),
         }}

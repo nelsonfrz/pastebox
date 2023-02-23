@@ -19,9 +19,13 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
         size={mobile ? 100 : 164}
         radius={1000}
       />
-      <Mantine.Title>{user?.name}</Mantine.Title>
+      <Mantine.Title style={{ wordBreak: "break-all" }}>
+        {user?.name}
+      </Mantine.Title>
 
-      <Mantine.Text>{user?.description}</Mantine.Text>
+      <Mantine.Text style={{ wordBreak: "break-all" }}>
+        {user?.description}
+      </Mantine.Text>
       <Mantine.Space h={20} />
       <Mantine.Flex wrap="wrap" gap="xl">
         <Link href={`mailto:${user?.email ?? ""}`}>

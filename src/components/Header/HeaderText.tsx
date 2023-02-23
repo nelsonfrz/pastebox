@@ -1,9 +1,5 @@
 import * as Mantine from "@mantine/core";
-import {
-  IconPencil,
-  IconShare,
-  IconPlus,
-} from "@tabler/icons";
+import { IconPencil, IconShare, IconPlus } from "@tabler/icons";
 import Link from "next/link";
 import { useSession } from "next-auth/react";
 import type { Text } from "@prisma/client";
@@ -25,7 +21,11 @@ export const HeaderText: React.FC<HeaderProps> = ({ children, text }) => {
           <Mantine.Group position="apart">
             <Link href="/">
               <Mantine.Flex align="center" wrap="nowrap" gap="xl">
-                <Mantine.Avatar size={47} radius={"xl"} src={"/android-chrome-192x192.png"} />
+                <Mantine.Avatar
+                  size={47}
+                  radius={"xl"}
+                  src={"/android-chrome-192x192.png"}
+                />
                 <Mantine.Title order={3} style={{ userSelect: "none" }}>
                   Pastebox
                 </Mantine.Title>

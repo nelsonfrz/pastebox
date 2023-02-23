@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 
 import { useBeforeunload } from "react-beforeunload";
 import { AccountDropdownItems } from "./AccountDropdownItems";
+import { useHotkeys } from "@mantine/hooks";
 
 export const TextEditorContext = createContext({
   title: "",
@@ -62,7 +63,25 @@ export const HeaderCreate: React.FC<HeaderProps> = ({ children }) => {
   const changePublicVisibility = (input: boolean) => setPublicVisibility(input);
   const changeContent = (input: string) => setContent(input);
 
-  const openSaveModal = () =>
+  const [openSaveModalOpened, setOpenSaveModalOpened] = useState(false);
+
+  useHotkeys([
+    [
+      "ctrl+S",
+      () => {
+        if (!openSaveModalOpened) openSaveModal();
+      },
+    ],
+    [
+      "ctrl+E",
+      () => {
+        if (!settingsModalOpened) setSettingsModalOpened(true);
+      },
+    ],
+  ]);
+
+  const openSaveModal = () => {
+    setOpenSaveModalOpened(true);
     openConfirmModal({
       title: "Save",
       children: (
@@ -98,7 +117,9 @@ export const HeaderCreate: React.FC<HeaderProps> = ({ children }) => {
           publicVisibility: publicVisibility,
         });
       },
+      onClose: () => setOpenSaveModalOpened(false),
     });
+  };
 
   const openCancelModal = () =>
     openConfirmModal({
@@ -257,6 +278,13 @@ export const HeaderCreate: React.FC<HeaderProps> = ({ children }) => {
         <Mantine.LoadingOverlay
           visible={loadingOverlayVisible}
           overlayBlur={2}
+          style={{
+            position: "fixed",
+            top: "0",
+            left: "0",
+            width: "100vw",
+            height: "100vh",
+          }}
         />
         <TextEditorContext.Provider
           value={{

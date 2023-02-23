@@ -12,19 +12,19 @@ const MyApp: AppType<{ session: Session | null }> = ({
   pageProps: { session, ...pageProps },
 }) => {
   return (
-      <SessionProvider session={session}>
-        <MantineProvider
-          withGlobalStyles
-          withNormalizeCSS
-          theme={{ colorScheme: "dark" }}
-        >
-          <ModalsProvider>
-            <NotificationsProvider>
-              <Component {...pageProps} />
-            </NotificationsProvider>
-          </ModalsProvider>
-        </MantineProvider>
-      </SessionProvider>
+    <SessionProvider session={session}>
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{ colorScheme: "dark" }}
+      >
+        <ModalsProvider>
+          <NotificationsProvider>
+            <Component {...pageProps} />
+          </NotificationsProvider>
+        </ModalsProvider>
+      </MantineProvider>
+    </SessionProvider>
   );
 };
 

@@ -20,8 +20,19 @@ export const textRouter = createTRPCRouter({
         text?.publicVisibility ||
         (text?.publicVisibility === false &&
           text.userId === ctx.session?.user.id)
-      )
-        return text;
+      ) {
+        const author = await ctx.prisma.user.findFirst({
+          where: {
+            id: text.userId,
+          },
+        });
+        if (author) {
+          return {
+            ...text,
+            author: author,
+          };
+        }
+      }
     }),
 
   create: protectedProcedure

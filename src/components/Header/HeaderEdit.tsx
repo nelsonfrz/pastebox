@@ -17,6 +17,7 @@ import { useSession } from "next-auth/react";
 import { useBeforeunload } from "react-beforeunload";
 import type { Text } from "@prisma/client";
 import { AccountDropdownItems } from "./AccountDropdownItems";
+import { useHotkeys } from "@mantine/hooks";
 
 export const TextEditorContext = createContext({
   title: "",
@@ -80,7 +81,25 @@ export const HeaderEdit: React.FC<HeaderProps> = ({ children, text }) => {
   const changePublicVisibility = (input: boolean) => setPublicVisibility(input);
   const changeContent = (input: string) => setContent(input);
 
-  const openSaveModal = () =>
+  const [openSaveModalOpened, setOpenSaveModalOpened] = useState(false);
+
+  useHotkeys([
+    [
+      "ctrl+S",
+      () => {
+        if (!openSaveModalOpened) openSaveModal();
+      },
+    ],
+    [
+      "ctrl+E",
+      () => {
+        if (!settingsModalOpened) setSettingsModalOpened(true);
+      },
+    ],
+  ]);
+
+  const openSaveModal = () => {
+    setOpenSaveModalOpened(true);
     openConfirmModal({
       title: "Save",
       children: (
@@ -109,6 +128,7 @@ export const HeaderEdit: React.FC<HeaderProps> = ({ children, text }) => {
         });
       },
     });
+  };
 
   const openCancelModal = () =>
     openConfirmModal({
@@ -309,6 +329,13 @@ export const HeaderEdit: React.FC<HeaderProps> = ({ children, text }) => {
         <Mantine.LoadingOverlay
           visible={loadingOverlayVisible}
           overlayBlur={2}
+          style={{
+            position: "fixed",
+            top: "0",
+            left: "0",
+            width: "100vw",
+            height: "100vh",
+          }}
         />
         <TextEditorContext.Provider
           value={{

@@ -5,6 +5,7 @@ import { Loader } from "../../../components/Loader";
 import { HeaderText } from "../../../components/Header/HeaderText";
 import { HeaderDefault } from "../../../components/Header/HeaderDefault";
 import { Text } from "../../../components/Text";
+import Link from "next/link";
 
 interface TextPageProps {
   id: string;
@@ -40,7 +41,30 @@ const TextPage: NextPage<TextPageProps> = ({ id }) => {
   return (
     <HeaderText text={getTextQuery.data}>
       <Mantine.Container>
+        <Mantine.Title order={2}>{getTextQuery.data.title}</Mantine.Title>
+        <Mantine.Text style={{ wordBreak: "break-all" }}>
+          {getTextQuery.data.description}
+        </Mantine.Text>
+        <Mantine.Space h={20} />
         <Text content={getTextQuery.data.content} />
+        <Mantine.Space h={20} />
+        <Mantine.Flex gap="md" align="center">
+          <Mantine.Avatar
+            size={50}
+            radius={1000}
+            src={getTextQuery.data.author.image}
+          />
+          <Mantine.Box>
+            <Link href={`/user/${getTextQuery.data.author.id}`}>
+              <Mantine.Title order={3}>
+                {getTextQuery.data.author.name}
+              </Mantine.Title>
+            </Link>
+            <Mantine.Text style={{ wordBreak: "break-all" }}>
+              {getTextQuery.data.author.description}
+            </Mantine.Text>
+          </Mantine.Box>
+        </Mantine.Flex>
       </Mantine.Container>
     </HeaderText>
   );
